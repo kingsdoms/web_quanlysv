@@ -75,10 +75,7 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 # 3. Cài thư viện
 pip install flask
 
-# 4. Tạo CSDL từ file SQL (đặt QL_SINHVIEN_sqlite.sql cùng thư mục với app.py)
-sqlite3 QL_SINHVIEN.db < QL_SINHVIEN_sqlite.sql
-
-# 5. Chạy ứng dụng
+# 4. Chạy ứng dụng
 python app.py
 ```
 
