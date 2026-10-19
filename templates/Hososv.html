@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý hồ sơ sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #2575fc;
+            margin-bottom: 20px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        label {
+            text-align: right;
+            padding-right: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .btn-small {
+            grid-column: span 2;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            width: auto;
+        }
+        .btn-small:hover {
+            transform: translateY(-3px);
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background: #2575fc;
+            color: white;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .actions button {
+            margin: 5px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #2575fc;
+            color: white;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background: #6a11cb;
+        }
+        /* Hộp thoại xác nhận */
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 999;
+          left: 0; top: 0;
+          width: 100%; height: 100%;
+          background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+          background-color: #e0f7fa;
+          margin: 15% auto;
+          padding: 20px;
+          border-radius: 10px;
+          width: 300px;
+          text-align: center;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .modal-content h3 {
+          margin-bottom: 20px;
+          color: #00695c;
+        }
+        .modal-content button {
+          margin: 5px;
+          padding: 8px 20px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+        .btn-yes {
+          background-color: #4caf50;
+          color: white;
+        }
+        .btn-no {
+          background-color: #f44336;
+          color: white;
+        }
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>QUẢN LÝ HỒ SƠ SINH VIÊN</h2>
+
+    <!-- Form thêm sinh viên -->
+    <form method="post" action="/them_sv">
+        <label for="msv">Mã SV:</label>
+        <input type="text" id="msv" name="msv" required>
+
+        <label for="hodem">Họ đệm:</label>
+        <input type="text" id="hodem" name="hodem" required>
+
+        <label for="ten">Tên:</label>
+        <input type="text" id="ten" name="ten" required>
+
+        <label for="gioitinh">Giới tính:</label>
+        <select id="gioitinh" name="gioitinh">
+            <option value="1">Nam</option>
+            <option value="0">Nữ</option>
+        </select>
+
+        <label for="ngaysinh">Ngày sinh:</label>
+        <input type="date" id="ngaysinh" name="ngaysinh" required>
+
+        <label for="manganh">Mã ngành:</label>
+        <input type="text" id="manganh" name="manganh" required>
+
+        <label for="malop">Mã lớp:</label>
+        <input type="text" id="malop" name="malop" required>
+
+        <button type="submit" class="btn-small">Thêm mới</button>
+    </form>
+
+    <!-- Bảng danh sách sinh viên -->
+    <table>
+        <tr>
+            <th>Mã SV</th>
+            <th>Họ đệm</th>
+            <th>Tên</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Mã ngành</th>
+            <th>Mã lớp</th>
+            <th>Thao tác</th>
+        </tr>
+        {% for sv in sinhvien %}
+        <tr>
+            <td>{{ sv.MSV }}</td>
+            <td>{{ sv.HODEM }}</td>
+            <td>{{ sv.TEN }}</td>
+            <td>{{ 'Nam' if sv.GIOITINH else 'Nữ' }}</td>
+            <td>{{ sv.NGAYSINH }}</td>
+            <td>{{ sv.MANGANH }}</td>
+            <td>{{ sv.MALOP }}</td>
+            <td>
+                <a href="{{ url_for('sua_sv', msv=sv.MSV) }}"><button>Sửa</button></a>
+                <button onclick="confirmDelete('{{ sv.MSV }}')">Xóa</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="actions">
+        <a href="/xuat_csv"><button>Xuất File Excel</button></a>
+        <a href="/quanly"><button>Quay lại Trang chính</button></a>
+    </div>
+
+    <!-- Hộp thoại xác nhận -->
+    <div id="confirmModal" class="modal">
+      <div class="modal-content">
+        <h3>Bạn có chắc chắn muốn xóa?</h3>
+        <button class="btn-yes" id="yesBtn">Yes</button>
+        <button class="btn-no" id="noBtn">No</button>
+      </div>
+    </div>
+
+    <script>
+    function confirmDelete(msv) {
+      const modal = document.getElementById("confirmModal");
+      modal.style.display = "block";
+
+      document.getElementById("yesBtn").onclick = function() {
+        window.location.href = "/xoa_sv/" + msv;
+      };
+      document.getElementById("noBtn").onclick = function() {
+        modal.style.display = "none";
+      };
+    }
+    </script>
+</div>
+</body>
+</html>

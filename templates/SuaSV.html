@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa thông tin sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            padding: 25px;
+        }
+        h2 {
+            text-align: center;
+            color: #2575fc;
+            margin-bottom: 20px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 12px;
+        }
+        label {
+            text-align: right;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .btn-update {
+            grid-column: span 2;
+            padding: 10px 30px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            display: block;
+            margin: 0 auto;
+        }
+        .btn-update:hover {
+            background-color: #388e3c;
+        }
+        .back-link {
+            grid-column: span 2;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .back-link a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>SỬA THÔNG TIN SINH VIÊN</h2>
+    <form method="POST">
+        <label>Mã SV:</label>
+        <input type="text" name="msv" value="{{ sv.MSV }}" readonly>
+
+        <label>Họ đệm:</label>
+        <input type="text" name="hodem" value="{{ sv.HODEM }}">
+
+        <label>Tên:</label>
+        <input type="text" name="ten" value="{{ sv.TEN }}">
+
+        <label>Giới tính:</label>
+        <select name="gioitinh">
+            <option value="1" {% if sv.GIOITINH %}selected{% endif %}>Nam</option>
+            <option value="0" {% if not sv.GIOITINH %}selected{% endif %}>Nữ</option>
+        </select>
+
+        <label>Ngày sinh:</label>
+        <input type="date" name="ngaysinh" value="{{ sv.NGAYSINH }}">
+
+        <label>Mã ngành:</label>
+        <input type="text" name="manganh" value="{{ sv.MANGANH }}">
+
+        <label>Mã lớp:</label>
+        <input type="text" name="malop" value="{{ sv.MALOP }}">
+
+        <button type="submit" class="btn-update">Cập nhật</button>
+
+        <div class="back-link">
+            <a href="{{ url_for('hososv') }}">Quay lại danh sách</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

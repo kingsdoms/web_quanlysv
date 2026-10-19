@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng ký tài khoản</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Khung đăng ký */
+        .register-container {
+            width: 450px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+            animation: showForm 0.5s ease;
+        }
+
+        /* Tiêu đề */
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 26px;
+        }
+
+        /* Nhóm input */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+
+            color: #444;
+            font-weight: bold;
+        }
+
+        /* Ô nhập */
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+
+            border: 1px solid #ccc;
+            border-radius: 8px;
+
+            font-size: 15px;
+            outline: none;
+
+            transition: all 0.3s;
+        }
+
+        /* Khi click vào input */
+        .form-group input:focus {
+            border-color: #667eea;
+
+            box-shadow:
+                0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Nút */
+        .button-group {
+            margin-top: 25px;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 13px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #667eea;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .btn-register:hover {
+            background: #5368d5;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 15px rgba(102, 126, 234, 0.35);
+        }
+
+        /* Nút quay lại */
+        .back-login {
+            display: block;
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #667eea;
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-login:hover {
+            text-decoration: underline;
+        }
+
+        /* Hiệu ứng xuất hiện */
+        @keyframes showForm {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .register-container {
+                width: 90%;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
+
+        <form method="post" action="/dangky">
+
+            <div class="form-group">
+                <label for="username">
+                    Tên đăng ký
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Nhập tên đăng ký"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Mật khẩu
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Nhập mật khẩu"
+                    required
+                >
+            </div>
+
+            <div class="button-group">
+
+                <input
+                    type="submit"
+                    value="Đăng ký"
+                    class="btn-register"
+                >
+
+            </div>
+
+        </form>
+
+        <a href="/dangnhap" class="back-login">
+            ← Đã có tài khoản? Đăng nhập
+        </a>
+
+    </div>
+
+</body>
+</html>
+
